@@ -1,0 +1,12 @@
+E:\jaszuk\lol\DBcars\DBcars\bin\Debug\Database1.mdf
+E:\jaszuk\lol\DBcars\DBcars\bin\Debug\Database1_log.ldf
+E:\jaszuk\lol\DBcars\DBcars\bin\Debug\DBcars.exe.config
+E:\jaszuk\lol\DBcars\DBcars\bin\Debug\DBcars.exe
+E:\jaszuk\lol\DBcars\DBcars\bin\Debug\DBcars.pdb
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.csprojAssemblyReference.cache
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.Form1.resources
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.Properties.Resources.resources
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.csproj.GenerateResource.cache
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.csproj.CoreCompileInputs.cache
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.exe
+E:\jaszuk\lol\DBcars\DBcars\obj\Debug\DBcars.pdb
