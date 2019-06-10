@@ -180,7 +180,9 @@ namespace dbtestconnection
 
         private async void button3_Click(object sender, EventArgs e)
         {
-          
+            if (label11.Visible)
+                label11.Visible = false;
+
 
             if (!string.IsNullOrEmpty(textBox8.Text) && !string.IsNullOrWhiteSpace(textBox8.Text))
             {
@@ -188,7 +190,12 @@ namespace dbtestconnection
                 command.Parameters.AddWithValue("Id", textBox8.Text);
                 await command.ExecuteNonQueryAsync();
             }
-           
+            else
+            {
+                label11.Visible = true;
+                label11.Text = "ID nie moze byc pusty!!!";
+            }
+
 
         }
 
