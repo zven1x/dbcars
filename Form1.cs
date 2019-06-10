@@ -79,7 +79,8 @@ namespace dbtestconnection
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            
+            if (label9.Visible)
+                label9.Visible = false;
 
 
             if (!string.IsNullOrEmpty(textBox1.Text) && !string.IsNullOrWhiteSpace(textBox1.Text) &&
@@ -96,7 +97,13 @@ namespace dbtestconnection
 
                 await command.ExecuteNonQueryAsync();
             }
-           
+            else
+            {
+                label9.Visible = true;
+
+                label9.Text = "Dane w polach 'Nazwa', 'Model', ' Cena'maja byc wypełnione";
+
+            }
 
 
 
