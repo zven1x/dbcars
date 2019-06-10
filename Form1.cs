@@ -77,6 +77,34 @@ namespace dbtestconnection
                 sqlConnection.Close();
         }
 
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            
+
+
+            if (!string.IsNullOrEmpty(textBox1.Text) && !string.IsNullOrWhiteSpace(textBox1.Text) &&
+            !string.IsNullOrEmpty(textBox2.Text) && !string.IsNullOrWhiteSpace(textBox2.Text) &&
+            !string.IsNullOrEmpty(textBox3.Text) && !string.IsNullOrWhiteSpace(textBox3.Text))
+            {
+                SqlCommand command = new SqlCommand("INSERT INTO [rentcar] (Nazwa, Model, Cena)VALUES(@Nazwa, @Model, @Cena)", sqlConnection);
+
+                command.Parameters.AddWithValue("Nazwa", textBox1.Text);
+
+                command.Parameters.AddWithValue("Model", textBox2.Text);
+
+                command.Parameters.AddWithValue("Cena", textBox3.Text);
+
+                await command.ExecuteNonQueryAsync();
+            }
+           
+
+
+
+
+        }
+
+
+
 
 
     }
