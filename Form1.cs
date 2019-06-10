@@ -178,7 +178,19 @@ namespace dbtestconnection
 
         }
 
+        private async void button3_Click(object sender, EventArgs e)
+        {
+          
 
+            if (!string.IsNullOrEmpty(textBox8.Text) && !string.IsNullOrWhiteSpace(textBox8.Text))
+            {
+                SqlCommand command = new SqlCommand("DELETE  FROM [rentcar] WHERE [Id]=@Id ", sqlConnection);
+                command.Parameters.AddWithValue("Id", textBox8.Text);
+                await command.ExecuteNonQueryAsync();
+            }
+           
+
+        }
 
 
 
