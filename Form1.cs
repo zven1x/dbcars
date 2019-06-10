@@ -59,7 +59,7 @@ namespace dbtestconnection
         {
 
 
-       }
+        }
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (sqlConnection != null && sqlConnection.State != ConnectionState.Closed)
@@ -104,43 +104,81 @@ namespace dbtestconnection
                 label9.Text = "Dane w polach 'Nazwa', 'Model', ' Cena'maja byc wypełnione";
 
             }
+        }
+        private async void uaktualizowacToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-            private async void uaktualizowacToolStripMenuItem_Click(object sender, EventArgs e)
+            listBox1.Items.Clear();
+
+
+            SqlDataReader sqlReader = null;
+
+            SqlCommand command = new SqlCommand("Select * From [rentcar] ", sqlConnection);
+
+            try
             {
+                sqlReader = await command.ExecuteReaderAsync();
 
-                listBox1.Items.Clear();
-
-
-                SqlDataReader sqlReader = null;
-
-                SqlCommand command = new SqlCommand("Select * From [rentcar] ", sqlConnection);
-
-                try
+                while (await sqlReader.ReadAsync())
                 {
-                    sqlReader = await command.ExecuteReaderAsync();
-
-                    while (await sqlReader.ReadAsync())
-                    {
-                        listBox1.Items.Add(Convert.ToString(sqlReader["Id"]) + "        " + Convert.ToString(sqlReader["Nazwa"]) + "  " +
-                            "      " + Convert.ToString(sqlReader["Model"]) + "        " + Convert.ToString(sqlReader["Cena"]));
-                    }
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                finally
-                {
-                    if (sqlReader != null)
-                        sqlReader.Close();
+                    listBox1.Items.Add(Convert.ToString(sqlReader["Id"]) + "        " + Convert.ToString(sqlReader["Nazwa"]) + "  " +
+                        "      " + Convert.ToString(sqlReader["Model"]) + "        " + Convert.ToString(sqlReader["Cena"]));
                 }
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+
+        }
+        private async void button2_Click(object sender, EventArgs e)
+        {
+
+            if (label10.Visible)
+                label10.Visible = false;
+
+
+            if (!string.IsNullOrEmpty(textBox4.Text) && !string.IsNullOrWhiteSpace(textBox4.Text) &&
+            !string.IsNullOrEmpty(textBox5.Text) && !string.IsNullOrWhiteSpace(textBox5.Text) &&
+            !string.IsNullOrEmpty(textBox6.Text) && !string.IsNullOrWhiteSpace(textBox6.Text) &&
+            !string.IsNullOrEmpty(textBox7.Text) && !string.IsNullOrWhiteSpace(textBox7.Text))
+
+            {
+                SqlCommand command = new SqlCommand("UPDATE [rentcar] SET [Nazwa]=@Nazwa,[Model]=@Model, [Cena]=@Cena WHERE [Id]=@Id", sqlConnection);
+
+                command.Parameters.AddWithValue("Id", textBox7.Text);
+                command.Parameters.AddWithValue("Nazwa", textBox6.Text);
+                command.Parameters.AddWithValue("Model", textBox5.Text);
+                command.Parameters.AddWithValue("Cena", textBox4.Text);
+
+                await command.ExecuteNonQueryAsync();
+            }
+
+
+
+            else if (!string.IsNullOrEmpty(textBox7.Text) && !string.IsNullOrWhiteSpace(textBox7.Text))
+            {
+                label10.Visible = true;
+
+                label10.Text = "Dane w polach 'Nazwa', 'Model', ' Cena'maja byc wypełnione!";
+            }
+            else
+            {
+                label10.Visible = true;
+                label10.Text = "ID nie moze byc pusty!!!";
 
             }
 
 
         }
+
+
 
 
 
