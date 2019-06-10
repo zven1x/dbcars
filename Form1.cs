@@ -105,7 +105,39 @@ namespace dbtestconnection
 
             }
 
+            private async void uaktualizowacToolStripMenuItem_Click(object sender, EventArgs e)
+            {
 
+                listBox1.Items.Clear();
+
+
+                SqlDataReader sqlReader = null;
+
+                SqlCommand command = new SqlCommand("Select * From [rentcar] ", sqlConnection);
+
+                try
+                {
+                    sqlReader = await command.ExecuteReaderAsync();
+
+                    while (await sqlReader.ReadAsync())
+                    {
+                        listBox1.Items.Add(Convert.ToString(sqlReader["Id"]) + "        " + Convert.ToString(sqlReader["Nazwa"]) + "  " +
+                            "      " + Convert.ToString(sqlReader["Model"]) + "        " + Convert.ToString(sqlReader["Cena"]));
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                        sqlReader.Close();
+                }
+
+
+            }
 
 
         }
