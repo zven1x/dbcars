@@ -49,12 +49,32 @@ namespace dbtestconnection
             {
                 if (sqlReader != null)
                     sqlReader.Close();
+
             }
+
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+
+        private async void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+
+       }
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (sqlConnection != null && sqlConnection.State != ConnectionState.Closed)
+                sqlConnection.Close();
+            {
+                Dispose();
+            }
+
+
         }
+
+
+
+
+
     }
+
 }
