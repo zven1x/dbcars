@@ -8,19 +8,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection.Emit;
 
-namespace dbtestconnection
+namespace DBcars
 {
     public partial class Form1 : Form
     {
+
+        SqlConnection sqlConnection;
+
         public Form1()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Metoda wywoluje sie pry starcie programu.
+        /// Wykonuje polączenie programu z sql server i wykonuje polecenie (SELECT * FROM).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void Form1_Load(object sender, EventArgs e)
         {
-            SqlConnection sqlConnection = new SqlConnection();
+            
 
             string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\jaszuk\lol\DBcars\DBcars\Database1.mdf;Integrated Security=True";
             sqlConnection = new SqlConnection(connectionString);
@@ -49,17 +58,20 @@ namespace dbtestconnection
             {
                 if (sqlReader != null)
                     sqlReader.Close();
-
             }
 
         }
 
-
-        private async void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void tabPage3_Click(object sender, EventArgs e)
         {
 
-
         }
+        /// <summary>
+        /// Metoda jest wykonana przy kliknięciu po "EXIT" w menuStrip.
+        /// Metoda wykonuje zamkniecie programu i przerywa polączenie z SQL server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (sqlConnection != null && sqlConnection.State != ConnectionState.Closed)
@@ -70,13 +82,25 @@ namespace dbtestconnection
 
 
         }
-
+        /// <summary>
+        /// Metoda jest wykonana w kazdym przypadku zamkniecia programu.
+        /// Motoda wykonuje przerwanie polączenia z SQL server.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (sqlConnection != null && sqlConnection.State != ConnectionState.Closed)
                 sqlConnection.Close();
         }
-
+        /// <summary>
+        /// Metoda jest wykonana w przypadku kkliknięcia po button1 ("INSERT").
+        /// Metoda wykonuje polecenie SQL (INSERT INTO [rentcar])
+        /// czyli wykonuje zapis danych przez uzytkownika i sprawdza czy są wypelnione pola ("Nazwa", "Modell", "Cena")
+        /// W przypadku niewykonania lub niedokonania polecenia - wypisuje na miejscu label9 text "Dane w polach 'Nazwa', 'Model', ' Cena'maja byc wypełnione".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button1_Click(object sender, EventArgs e)
         {
             if (label9.Visible)
@@ -104,7 +128,17 @@ namespace dbtestconnection
                 label9.Text = "Dane w polach 'Nazwa', 'Model', ' Cena'maja byc wypełnione";
 
             }
+
+
+
+
         }
+        /// <summary>
+        /// Metoda wykonuje sie przy kliknięciu po "Uaktualizowac" w menuStrip.
+        /// Metoda czysci pola w programu. Za tym wykonuje polecenie SQL (SELECT * FROM [rentcar]).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void uaktualizowacToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
@@ -136,7 +170,16 @@ namespace dbtestconnection
                     sqlReader.Close();
             }
 
+
         }
+        /// <summary>
+        /// Metoda jest wykonana w przypadku kkliknięcia po button2 ("UPDATE").
+        /// Metoda wykonuje polecenie SQL (UPDATE [rentcar] SET ).
+        /// czyli wykonuje zmiany danych przez uzytkownika i sprawdza czy są wypelnione pola ("Nazwa", "Modell", "Cena", "ID")
+        /// W przypadku niewykonania lub niedokonania polecenia - wypisuje na miejscu label10 text "Dane w polach 'Nazwa', 'Model', ' Cena'maja byc wypełnione" jezeli nie są takiego ID -"ID nie moze byc pusty!!!".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button2_Click(object sender, EventArgs e)
         {
 
@@ -177,13 +220,20 @@ namespace dbtestconnection
 
 
         }
-
+        /// <summary>
+        /// Metoda jest wykonana w przypadku kkliknięcia po button3 ("DELETE").
+        /// Metoda wykonuje polecenie SQL (DELETE FROM [rentcar] WHERE [ID]).
+        /// czyli wykonuje usuniencie danych przez uzytkownika i sprawdza czy są wypelnione pola ("ID")
+        /// W przypadku niewykonania polecenia - wypisuje na miejscu label11 text "ID nie moze byc pusty!!!".
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void button3_Click(object sender, EventArgs e)
         {
             if (label11.Visible)
                 label11.Visible = false;
 
-
+            
             if (!string.IsNullOrEmpty(textBox8.Text) && !string.IsNullOrWhiteSpace(textBox8.Text))
             {
                 SqlCommand command = new SqlCommand("DELETE  FROM [rentcar] WHERE [Id]=@Id ", sqlConnection);
@@ -195,14 +245,8 @@ namespace dbtestconnection
                 label11.Visible = true;
                 label11.Text = "ID nie moze byc pusty!!!";
             }
-
+           
 
         }
-
-
-
-
-
     }
-
-}
+} 
